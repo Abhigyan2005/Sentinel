@@ -1,2 +1,2 @@
 # PasswordManager
-CLI tool to manager your passwords.
+CLI tool to manage your passwords.
