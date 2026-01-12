@@ -3,7 +3,6 @@ import { stdin, stdout } from "process";
 export async function questionMask(rl, prompt) {
   return new Promise((resolve) => {
     if (!stdin.isTTY || typeof stdin.setRawMode !== "function") {
-      console.warn("⚠️  Password masking not available in this environment");
       rl.question(prompt).then(resolve);
       return;
     }

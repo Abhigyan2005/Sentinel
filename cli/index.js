@@ -6,6 +6,7 @@ import get from "./commands/get.js";
 import add from "./commands/add.js";
 import { render } from "./utils/render.js";
 import open from "open";
+import list from "./commands/list.js";
 
 const rl = readline.createInterface({ input, output });
 
@@ -17,9 +18,10 @@ console.log(
 ██╔═══╝ ██╔══██║╚════██║╚════██║    ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
 ██║     ██║  ██║███████║███████║    ╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
 ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ 
-                                                                              
+
 `)
 );
+
 console.log("type help to get a list of commands\n");
 
 async function main() {
@@ -66,11 +68,18 @@ Commands:
 
     if (command == "clear") {
       render();
+      continue;
     }
 
     if (command === "github" || command === "repo") {
       await open("https://github.com/Abhigyan2005/PasswordManager");
       console.log("🌐 Opening GitHub repository...");
+      continue;
+    }
+
+    if (command == "list") {
+      await list(parts, rl);
+      continue;
     }
     
     console.log("unknown command");
