@@ -13,7 +13,7 @@ export default async function get(parts, rl) {
   }
 
   if (parts.length < 2) {
-     console.log(`   ${chalk.red(`Usage:`)} get <service>\n`);
+    console.log(`   ${chalk.red(`Usage:`)} get <service>\n`);
     return;
   }
 
@@ -21,15 +21,27 @@ export default async function get(parts, rl) {
 
   const vault = JSON.parse(fs.readFileSync(VAULT_PATH, "utf-8"));
 
-  const a = await questionMask(rl, "Enter Master Password: ");
   const salt = vault.salt;
-  const hash = crypto.pbkdf2Sync(a, salt, 100000, 32, "sha256").toString("hex");
 
-  if (vault.hash != hash) {
-    console.log("master password is incorrect");
-    return;
+  for (let i = 3; i > 0; i--) {
+    const a = await questionMask(rl, "Enter Master Password: ");
+    const hash = crypto
+      .pbkdf2Sync(a, salt, 100000, 32, "sha256")
+      .toString("hex");
+
+    if (vault.hash != hash) {
+      let attempt_left = i - 1;
+      console.log(
+        chalk.red.bold(`❌  Wrong Password!  (${attempt_left} tries left)`)
+      );
+      if (attempt_left == 0) {
+        return;
+      }
+      continue;
+    } else {
+      break;
+    }
   }
-
   const b = vault.entries.filter((e) => e.name === service);
   const result = b.map((e) => ({
     username: e.username,
