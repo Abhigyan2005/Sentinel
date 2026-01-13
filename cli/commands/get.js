@@ -3,6 +3,7 @@ import path from "path";
 import crypto from "crypto";
 import chalk from "chalk";
 import { questionMask } from "../utils/mask.js";
+import { render } from "../utils/render.js";
 
 export default async function get(parts, rl) {
   const VAULT_PATH = path.join(process.cwd(), "vault.json");
@@ -42,6 +43,7 @@ export default async function get(parts, rl) {
       break;
     }
   }
+
   const b = vault.entries.filter((e) => e.name === service);
   const result = b.map((e) => ({
     username: e.username,
@@ -53,6 +55,10 @@ export default async function get(parts, rl) {
     return;
   }
 
+  render();
+
+  console.log(chalk.bold.cyan(`\n🔐 Your saved ${service} accounts\n`));
+  
   for (const e of result) {
     console.log(chalk.magenta("──────────────────────────────"));
     console.log(`${chalk.bold.blue("Username:")} ${chalk.green(e.username)}`);

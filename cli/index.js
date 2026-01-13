@@ -7,7 +7,8 @@ import add from "./commands/add.js";
 import { render } from "./utils/render.js";
 import open from "open";
 import list from "./commands/list.js";
-
+import { deleteEntry } from "./commands/delete.js";
+import { drop } from "./commands/drop.js";
 const rl = readline.createInterface({ input, output });
 
 console.log(
@@ -36,6 +37,7 @@ async function main() {
     }
 
     if (command === "help") {
+      render();
       console.log(`
 ${chalk.bold.cyan("Commands:")}
 
@@ -83,6 +85,16 @@ ${chalk.bold.yellow("Do you want to contribute or suggest features?")}
 
     if (command == "list") {
       await list(parts, rl);
+      continue;
+    }
+
+    if (command == "delete") {
+      await deleteEntry(rl,parts);
+      continue;
+    }
+
+    if (command == "drop") {
+      await drop(rl);
       continue;
     }
 
