@@ -4,6 +4,7 @@ import crypto from "crypto";
 import chalk from "chalk";
 import { questionMask } from "../utils/mask.js";
 import { render } from "../utils/render.js";
+import decryptPassword from "../utils/decryptPassword.js";
 
 export default async function get(parts, rl) {
   const VAULT_PATH = path.join(process.cwd(), "vault.json");
@@ -24,10 +25,11 @@ export default async function get(parts, rl) {
 
   const salt = vault.salt;
 
+  let MasterPass = "";
   for (let i = 3; i > 0; i--) {
-    const a = await questionMask(rl, "Enter Master Password: ");
+    const MasterPass = await questionMask(rl, "Enter Master Password: ");
     const hash = crypto
-      .pbkdf2Sync(a, salt, 100000, 32, "sha256")
+      .pbkdf2Sync(MasterPass, salt, 100000, 32, "sha256")
       .toString("hex");
 
     if (vault.hash != hash) {
@@ -45,10 +47,6 @@ export default async function get(parts, rl) {
   }
 
   const b = vault.entries.filter((e) => e.name === service);
-  const result = b.map((e) => ({
-    username: e.username,
-    password: e.password,
-  }));
 
   if (result.length === 0) {
     console.log("No entry found");
@@ -58,7 +56,7 @@ export default async function get(parts, rl) {
   render();
 
   console.log(chalk.bold.cyan(`\n🔐 Your saved ${service} accounts\n`));
-  
+
   for (const e of result) {
     console.log(chalk.magenta("──────────────────────────────"));
     console.log(`${chalk.bold.blue("Username:")} ${chalk.green(e.username)}`);
