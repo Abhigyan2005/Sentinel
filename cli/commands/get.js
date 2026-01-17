@@ -27,7 +27,7 @@ export default async function get(parts, rl) {
 
   let MasterPass = "";
   for (let i = 3; i > 0; i--) {
-    const MasterPass = await questionMask(rl, "Enter Master Password: ");
+    MasterPass = await questionMask(rl, "Enter Master Password: ");
     const hash = crypto
       .pbkdf2Sync(MasterPass, salt, 100000, 32, "sha256")
       .toString("hex");
@@ -46,7 +46,15 @@ export default async function get(parts, rl) {
     }
   }
 
-  const b = vault.entries.filter((e) => e.name === service);
+  const result = vault.entries
+    .filter((e) => e.name === service)
+    .map((e) => {
+      const password =  decryptPassword(e.password, MasterPass, salt);
+      return {
+        ...e,
+        password
+      };
+    });
 
   if (result.length === 0) {
     console.log("No entry found");
