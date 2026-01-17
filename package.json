@@ -1,5 +1,5 @@
 {
-  "name": "passwordmanager",
+  "name": "sentinel",
   "version": "1.0.0",
   "main": "cli/index.js",
   "scripts": {
@@ -7,6 +7,9 @@
   },
   "keywords": [],
   "type": "module",
+  "bin":{
+    "sentinel": "./cli/index.js"
+  },
   "author": "",
   "license": "ISC",
   "description": "",

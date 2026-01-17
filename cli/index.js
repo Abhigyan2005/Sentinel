@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import readline from "readline/promises";
 import { stdin as input, stdout as output } from "process";
 import chalk from "chalk";
@@ -9,6 +11,11 @@ import open from "open";
 import list from "./commands/list.js";
 import { deleteEntry } from "./commands/delete.js";
 import { drop } from "./commands/drop.js";
+import checkLatestVersion from "./utils/newVersion.js";
+
+
+await checkLatestVersion();
+
 const rl = readline.createInterface({ input, output });
 
 console.log(
@@ -89,7 +96,7 @@ ${chalk.bold.yellow("Do you want to contribute or suggest features?")}
     }
 
     if (command == "delete") {
-      await deleteEntry(rl,parts);
+      await deleteEntry(rl, parts);
       continue;
     }
 
