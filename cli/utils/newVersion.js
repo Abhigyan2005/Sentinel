@@ -21,11 +21,10 @@ async function checkLatestVersion() {
     if (latestVersion !== pkg.version) {
       console.log(
         `\n⚠️  A new version (${latestVersion}) is available. Update with:\n` +
-        `npm install -g ${pkg.name}\n`
+          `npm install -g ${pkg.name}\n`,
       );
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 }
 
 export default checkLatestVersion;

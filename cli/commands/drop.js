@@ -4,9 +4,9 @@ import path from "path";
 import crypto from "crypto";
 import { render } from "../utils/render.js";
 import { questionMask } from "../utils/mask.js";
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 export async function drop(rl) {
-  const VAULT_PATH = path.join(process.cwd(), "vault.json");
 
   if (!fs.existsSync(VAULT_PATH)) {
     console.log(chalk.red("❌ Vault not initialized : Run init command first"));

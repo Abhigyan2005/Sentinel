@@ -4,14 +4,13 @@ import path from "path";
 import crypto from "crypto";
 import { render } from "../utils/render.js";
 import { questionMask } from "../utils/mask.js";
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 export async function deleteEntry(rl, parts) {
   if (parts.length < 3) {
     console.log(`   ${chalk.red(`Usage:`)} delete <service> <username> \n`);
     return;
   }
-
-  const VAULT_PATH = path.join(process.cwd(), "vault.json");
 
   if (!fs.existsSync(VAULT_PATH)) {
     console.log(chalk.red("❌ Vault not initialized : Run init command first"));

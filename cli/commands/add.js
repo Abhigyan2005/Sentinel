@@ -5,10 +5,10 @@ import chalk from "chalk";
 import { questionMask } from "../utils/mask.js";
 import genPass from "../utils/generatePassword.js";
 import encryptPassword from "../utils/encryptPassword.js";
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 
 export default async function add(parts, rl) {
-  const VAULT_PATH = path.join(process.cwd(), "vault.json");
 
   if (!fs.existsSync(VAULT_PATH)) {
     console.log("Vault not initizalized : Run init command first");

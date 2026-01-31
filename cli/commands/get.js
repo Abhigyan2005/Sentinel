@@ -6,10 +6,10 @@ import clipboard from 'clipboardy';
 import { questionMask } from "../utils/mask.js";
 import { render } from "../utils/render.js";
 import decryptPassword from "../utils/decryptPassword.js";
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 export default async function get(parts, rl) {
-  const VAULT_PATH = path.join(process.cwd(), "vault.json");
-
+  
   if (!fs.existsSync(VAULT_PATH)) {
     console.log("Vault not initizalized : Run init command first");
     return;

@@ -2,7 +2,7 @@ import fs from "fs";
 import crypto from "crypto";
 import path from "path";
 import { questionMask } from "../utils/mask.js";
-const VAULT_PATH = path.join(process.cwd(), "vault.json");
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 export default async function init(rl) {
   if (fs.existsSync(VAULT_PATH)) {

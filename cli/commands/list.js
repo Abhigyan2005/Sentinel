@@ -2,10 +2,10 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { render } from "../utils/render.js";
+import { VAULT_PATH } from "../utils/VaultPath.js";
 
 export default async function list() {
-  const VAULT_PATH = path.join(process.cwd(), "vault.json");
-
+  
   if (!fs.existsSync(VAULT_PATH)) {
     console.log(chalk.red("❌ Vault not initialized : Run init command first"));
     return;
